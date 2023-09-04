@@ -23,31 +23,42 @@
  }
  loadCategories();
 
-  
+ const dynamicImage = "<img src='./logo.png'/>"; 
+
  const loadCard = async (id) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`);
     const data = await res.json();
     const cards = data.data;
-    displaycard(cards);
-     
+    if(cards.length === 0 ){
+      const cardContainer = document.getElementById('card');
+      const cardContainer2 = document.getElementById('card2');
+      cardContainer.innerHTML="";
+      cardContainer2.innerHTML= "<div class='flex flex-col justify-center items-center container  text-center my-20'><div><img src='./img/icon.png'/></div><br><div><p class='text-xl'>Sorry No Data Found</p></div></div>";
+         
+    }else{
+      displaycard(cards);
+       
+      
+    }
     
-
+     
  }
  const dynamicImageUrl = "<img src='./img/fi_10629607.png'/>";
 
 
  const displaycard = cards => {
    const cardContainer = document.getElementById('card');
+   const cardContainer2 = document.getElementById('card2');
+   cardContainer2.innerHTML="";
    cardContainer.innerHTML="";
     cards.forEach(card =>{
         
         const cardBtn = document.createElement('div');
-
-         
+  
         cardBtn.innerHTML =` 
-        <div class="card card-compact w-60 h-80 bg-base-100 shadow-xl">
+        <div class="card card-compact w-72 h-80 bg-base-100 shadow-xl">
         <figure><img class=" w-80 h-40" src="${card.thumbnail}" /></figure>
-        <div class="flex items-start">
+        <div class="flex items-start ml-2">
         <div><img class=" w-14 mt-4 rounded-full" src="${card.authors[0].profile_picture}"/> </div>
         <div>
         <div>
